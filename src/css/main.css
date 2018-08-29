@@ -1,0 +1,8 @@
+* {
+	background-color: blueviolet;
+}
+
+.main-div {
+	display: flex;
+	align-items: center;
+}
