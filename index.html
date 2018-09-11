@@ -1,19 +1,126 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TestApp</title>
+	<title>Over and Ugh</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" media="screen" href="src/css/main.css" />
 </head>
+
 <body>
 	<div class="main-div">
-		<canvas id="GameWindow" width="1280" height="720" style="border: 1px solid #603ca1"></canvas>
-		<script src="src/scripts/engine/renderer.js"></script>
-		<script src="src/scripts/engine/resource_loader.js"></script>
-		<script src="src/scripts/engine/init.js"></script>
-		<script src="src/scripts/main.js"></script>
+		<canvas id="GameWindow" style="border: 1px solid #603ca1" height="600" width="800">You browser does not support
+			canvas!</canvas>
+		<button onclick="run()">Scan Now!</button>
+		<form>
+			<input type="text" placeholder="Enter your answer">
+			<input type="submit">
+		</form>
+
+		<script>
+			var canvas = document.getElementById('GameWindow');
+			var ctx = canvas.getContext('2d');
+			ctx.font = "20px Comic Sans MS";
+
+			function drawRectangle(x, y, deltaX, deltaY, color) {
+				if (canvas.getContext) {
+					ctx.strokeStyle = color;
+					ctx.fillStyle = color;
+					ctx.fillRect(x, y, deltaX, deltaY);
+				}
+			}
+
+			function drawText(x, y, color, align, text) {
+				ctx.fillStyle = color;
+				ctx.textAlign = align;
+				ctx.fillText(text, x, y);
+			}
+
+			function drawCircle(x, y, r, color) {
+				ctx.beginPath();
+				ctx.arc(x, y, r, 0, 2 * Math.PI);
+				ctx.closePath();
+				ctx.fillStyle = color;
+				ctx.fill();
+				ctx.stroke();
+			}
+
+			class Circle {
+				constructor(x, y, r, color) {
+					this.x = x;
+					this.y = y;
+					this.r = r;
+					this.color = color;
+				}
+
+				draw() {
+					drawCircle(this.x, this.y, this.r, this.color);
+				}
+			}
+
+			// Game begin
+			function render() {
+				drawRectangle(0, 0, 800, 600, "#135f29");
+				agents[1].draw();
+				agents[2].draw();
+			}
+
+			var agents = [];
+			agents[1] = new Circle(300, 300, 10, "orange");
+			agents[2] = new Circle(600, 100, 14, "yellow");
+
+			var clickCount = 0;
+
+			function run() {
+				clickCount++;
+				if (clickCount < 20) {
+					render();
+					update();
+				}
+				if (clickCount > 20) {
+					// Game is over
+					drawRectangle(0, 0, 800, 600, "red");
+					drawText(canvas.width / 2, canvas.height / 2, "blue", "center", "Scans exhausted!");
+					drawText(canvas.width / 2, canvas.height / 2 + 40, "blue", "center",
+						"Write all colors of all the agents that went offline in the textbox below");
+				}
+			};
+
+			function getNewPosition(agent) {
+				var min = agent.x - 40;
+				var max = agent.x + 40;
+				var random = Math.random() * (+max - +min) + +min;
+				if ((agent.x < 0 && random < 0) || (agent.x > 750 && random > 0)) {
+					agent.x = -random;
+				} else {
+					agent.x = random;
+				}
+
+				var min = agent.y - 20;
+				var max = agent.y + 10;
+				var random = Math.random() * (+max - +min) + +min;
+				if ((agent.y < 0 && random < 0) || (agent.y > 550 && random > 0)) {
+					agent.y = -random;
+				} else {
+					agent.y = random;
+				}
+
+				return agent;
+			}
+
+			function update() {
+				agents[1] = getNewPosition(agents[1]);
+				agents[2] = getNewPosition(agents[2]);
+			}
+
+			window.onload = function () {
+				setInterval(update, 1000);
+			}
+
+		</script>
 	</div>
 </body>
+
 </html>
