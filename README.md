@@ -6,4 +6,4 @@ In this game you play a secret service supervisor that keeps reporting agents' o
 Size: About 8KB unpacked and un-minified.
 
 ## Setup
-Just run on localhost:8080 from repository root and you are good to go!
+Just run on `localhost:8080` from repository root and you are good to go!
