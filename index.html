@@ -24,22 +24,20 @@
 			<li><b>Scenarios for an agent to go offline are:</b>
 				<ul type="bullet">
 					<li><b>Agent's tracker stops moving for more than a couple of seconds, maybe they are unconscious</b></li>
-					<li><b>Agent goes out of bound and never returns. This could mean they were taken away by suspicious guards</b></li>
-					<li><b>Agent's tracker malfunctions. When this happens, the agent's tracker will assume the agent's last online
-							position become
-							grey in colour; there may have been a fist fight which broke the tracker</b></li>
+					<li><b>Agent's tracker disappears. This could mean they were taken away by guards</b></li>
+					<li><b>Agent's tracker malfunctions. <p>When this happens, the agent's tracker will assume the agent's last online
+								position become grey in colour there may have been a fist fight which broke the tracker</p></b></li>
 				</ul>
 			</li>
 			<li>It is possible that you won't see some changes in the agents' activities because of not updating mindfully</li>
 			<li>Hurry up! Agents have already left the headquarters!</li>
 		</ul>
-		<hr style="margin-left: -30px" color="indigo">
 		<canvas id="GameWindow" style="border: 1px solid #603ca1" height="600" width="800">You browser does not support
 			canvas!</canvas>
 		<button onclick="run()">Scan Now!</button><br>
 		<textarea id="answer" width="100" placeholder="enter-your-answer-separated-by-hyphens-in-lowercase-and-in-chronological-order"></textarea>
 		<button onclick="submission()">Submit</button>
-
+		<br><br><br>
 		<script>
 			var canvas = document.getElementById('GameWindow');
 			var ctx = canvas.getContext('2d');
